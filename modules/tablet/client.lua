@@ -47,3 +47,24 @@ end)
 AddEventHandler("ND_MDT:closeUI", function()
     removeTablet(cache.ped)
 end)
+
+RegisterNetEvent("ND_MDT:UsedTablet")
+AddEventHandler("ND_MDT:UsedTablet", function ()
+    if isOpen() then
+        local playerInfo = Bridge.getPlayerInfo()
+        if not Bridge.hasAccess(playerInfo.job) then
+            return lib.notify({
+                title = "MDT",
+                description = "You don't have access to this device",
+                type = "error",
+                duration = 5000
+            })
+        end
+
+        useTablet(cache.ped)
+        OpenMDT(true)
+    else
+        OpenMDT(false)
+        removeTablet(cache.ped)
+    end
+end)
