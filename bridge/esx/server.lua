@@ -250,7 +250,7 @@ function Bridge.getLicenses(id)
             status = result[i]?.status,
             issued = result[i]?.issued,
             expires = nil,
-            identifier = result[i]?.type or result[i],
+            identifier = result[i]?.identifier or result[i].type,
         }
     end
 
@@ -261,13 +261,12 @@ end
 ---@param licenseIdentifier string
 ---@param newLicenseStatus string
 function Bridge.editPlayerLicense(characterId, licenseIdentifier, newLicenseStatus)
-
     MySQL.update.await(
         "UPDATE user_licenses SET status = @status WHERE identifier = @identifier AND owner = @owner",
         {
-            ["@owner"] = characterId,
+            ["@owner"]      = characterId,
             ["@identifier"] = licenseIdentifier,
-            ["@status"] = newLicenseStatus,
+            ["@status"]     = newLicenseStatus,
         }
     )
 end
@@ -588,6 +587,10 @@ function Bridge.invitePlayerToJob(src, target)
     local targetPlayer = ESX.GetPlayerFromId(target)
     targetPlayer.setJob(xPlayer.job.name, 0)
     return true
+end
+
+function Bridge.ComparePlates(plate1, plate2)
+    return plate1:gsub(" ", "") == plate2:gsub(" ", "")
 end
 
 --[[ Xtra Functions ]]
