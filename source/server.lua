@@ -355,6 +355,11 @@ RegisterNetEvent("ND_MDT:removeBolo", function(id)
     TriggerClientEvent("ND_MDT:removeBolo", -1, id, boloType)
 end)
 
+-- Saves New Profile picture to DB
+RegisterNetEvent("ND_MDT:updateProfilePicture", function (data)
+    Bridge.updateProfilePicture(data.character.id, data.img)
+end)
+
 -- retrive all reports.
 lib.callback.register("ND_MDT:getReports", function(src)
     local player = Bridge.getPlayerInfo(src)
