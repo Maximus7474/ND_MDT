@@ -510,7 +510,7 @@ button {
     margin-top: 1%;
     margin-bottom: 4%;
 }
-.nameSearchResultButton:hover, .plateSearchResultButton:hover, .weaponSearchResultButton:hover, .searchButtons > button:hover, .form-records-content > button:hover {
+.nameSearchResultButton:hover, .plateSearchResultButton:hover, .weaponSearchResultButton:hover, .searchButtons > button:hover, .form-records-content > button:hover, .form-updatePicture-content > button:hover {
     transition: .1s ease-in-out;
     cursor: pointer;
     opacity: 0.8;
@@ -776,6 +776,10 @@ button {
     top: 2%;
     right: 60.5%;
 }
+.updatePictureButton {
+    top: 2%;
+    right: 75.0%;
+}
 .recordsCitizen {
     white-space: nowrap;
     width: 100%;
@@ -993,12 +997,29 @@ button {
     outline: none;
     z-index: 5;
 }
-.form-records-bar > p, .form-bolo-bar > p, .form-reports > p {
+.form-updatePicture {
+    display: none;
+    margin: auto;
+    position: absolute;
+    top: 30vh;
+    left: 35vw;
+    height: 50vh;
+    width: 30vw;
+    color: white;
+    background-color: #2F3133;
+    border: solid #5c5c5c 2px;
+    border-radius: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    outline: none;
+    z-index: 5;
+}
+.form-records-bar > p, .form-bolo-bar > p, .form-reports > p, .form-updatePicture-bar > p {
     position: relative;
     width: 50%;
     margin: 0;
 }
-.form-records-bar, .form-bolo-bar, .form-reports-bar {
+.form-records-bar, .form-bolo-bar, .form-reports-bar, .form-updatePicture-bar {
     position: relative;
     margin: 3% 0 1% 5%;
     top: auto;
@@ -1045,7 +1066,7 @@ button {
     top: 66%;
     width: 90%;
 }
-.form-records-content > button {
+.form-records-content > button, .form-updatePicture-content > button {
     position: absolute;
     margin: auto 35%;
     top: 88%;
@@ -1057,7 +1078,7 @@ button {
     border-radius: 8px;
     transition: .1s ease-in-out;
 }
-.form-records-close, .form-bolo-close, .form-reports-close {
+.form-records-close, .form-bolo-close, .form-reports-close, .form-updatePicture-close {
     position: absolute;
     top: 0;
     right: 0;
@@ -1071,7 +1092,7 @@ button {
     transition: .1s ease-in-out;
     outline: none;
 }
-.form-records-close:hover, .form-bolo-close:hover, .form-reports-close:hover {
+.form-records-close:hover, .form-bolo-close:hover, .form-reports-close:hover, .form-updatePicture-close:hover {
     transition: .1s ease-in-out;
     color: white;
     cursor: pointer;
@@ -1154,13 +1175,41 @@ button {
     width: 90%;
     height: 75%;
 }
+.form-updatePicture-content {
+    position: relative;
+    margin: 0 5%;
+    top: 3.8%;
+    width: 90%;
+    height: 85%;
+}
 .form-bolo-content > div {
     display: grid;
     height: 90%;
     grid-template-rows: repeat(4, 7.2%) 1fr;
     grid-row-gap: 4%;
 }
-.form-bolo-content > div > input, .form-bolo-content > div > select, .form-reports-content > input {
+.form-updatePicture-content > div {
+    display: grid;
+    height: 85%;
+    grid-template-rows: 10% 25vh auto;
+    grid-row-gap:4%;
+}
+.form-updatePicture-content > img {
+    size: inherit;
+    max-width: 25vh;
+    max-height: 25vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+.form-updatePicture-help {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    height: min-content;
+    text-decoration: underline;
+}
+.form-bolo-content > div > input, .form-bolo-content > div > select, .form-reports-content > input, .form-updatePicture-content > input {
     color: #ccc;
     background-color: #2a2c2e;
     outline: none;
@@ -1171,13 +1220,13 @@ button {
     width: 98.25%;
     margin-bottom: 3%;
 }
-.form-bolo-content > div > select:required:invalid, .form-records-content > select:required:invalid {
+.form-bolo-content > div > select:required:invalid, .form-records-content > select:required:invalid, .form-updatePicture-content > selecet:required:invalid {
     color: #757575;
 }
-.form-bolo-content > div > select > option, .form-records-content > select > option {
+.form-bolo-content > div > select > option, .form-records-content > select > option, .form-updatePicture-content > select > option {
     color: #ccc;
 }
-.form-bolo-content > div > textarea, .form-reports-content > textarea {
+.form-bolo-content > div > textarea, .form-reports-content > textarea, .form-updatePicture-content > textarea {
     width: 98.2%;
     color: #ccc;
     background-color: #2a2c2e;
@@ -1191,6 +1240,9 @@ button {
 }
 #form-bolo-create, #form-reports-create {
     top: 86%;
+}
+#form-updatePicture-create {
+    bottom: 5%;
 }
 
 .confirm-screen {

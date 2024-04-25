@@ -29,7 +29,7 @@
                         <img class="leftPanelPlayerInfoImage" />
                     </div>
                     <div class="leftPanelPlayerInfoContainer">
-                        <h3 class="leftPanelPlayerInfoUnitNumber">Callsign not set</h3>
+                        <h3 class="leftPanelPlayerInfoUnitNumber">No Callsign</h3>
                         <h4 class="leftPanelPlayerInfoName"></h4>
                     </div>
                 </div>
@@ -80,6 +80,7 @@
                 <div class="rightPanelNameSearch">
                     <div class="recordsPage">
                         <i class="fa-solid fa-chevron-left recordsReturn"></i>
+                        <button class="updatePictureButton recordsPageTopButton"><i class="fas fa-user"></i> Update Picture</button>
                         <button class="viewVehiclesButton recordsPageTopButton"><i class="fas fa-car-side"></i> View vehicles</button>
                         <button class="viewWeaponsButton recordsPageTopButton"><i class="fa-solid fa-gun"></i> View weapons</button>
                         <button class="boloCitizenCreateButton recordsPageTopButton"><i class="fa-solid fa-hand"></i> Create BOLO</button>
@@ -211,6 +212,20 @@
             </select>
             <div class="form-bolo-content"></div>
             <button id="form-bolo-create">Create</button>
+        </div>
+    </div>
+
+    <div class="form-updatePicture" style="display: none;">
+        <div class="form-updatePicture-bar" style="user-select: none"><p>Change Image Source</p></div>
+        <button class="form-updatePicture-close"><i class="fa-solid fa-xmark"></i></button>
+
+        <div class="form-updatePicture-content">
+            <div class="form-updatePicture-content">
+                <input type="text" placeholder="New Image Source" id="form-updatePicture-imagesrc">
+                <img class="form-updatePicture-preview" src="user.jpg">
+                <em><p class="form-updatePicture-help">Check the rendered image before confirming</p></em>
+            </div>
+            <button id="form-updatePicture-create">Confirm</button>
         </div>
     </div>
 

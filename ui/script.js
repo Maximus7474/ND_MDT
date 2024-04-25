@@ -130,6 +130,9 @@ $(".form-bolo-bar").mousedown(function(event) {
 $(".form-reports-bar").mousedown(function(event) {
     movePage(".form-reports")
 });
+$(".form-updatePicture-bar").mousedown(function(event) {
+    movePage(".form-updatePicture")
+});
 
 const escapeHtml = (unsafe) => {
     if (!unsafe || unsafe == "" || typeof(unsafe) != "string") {return unsafe}
@@ -160,6 +163,7 @@ $.getJSON("../config/translate.json", function(data) {
     $("#rightPanelDashboardRouteButton").text(translation["En route"]);
     $("#rightPanelDashboardDisplayActiveUnits").text(translation["Active Units"]);
     $("#rightPanelDashboardDisplayCalls").text(translation["Calls"]);
+    $(".updatePictureButton").html(`<i class="fas fa-user"></i> ${translation["Update Picture"]}`);
     $(".viewVehiclesButton").html(`<i class="fas fa-car-side"></i> ${translation["View vehicles"]}`);
     $(".viewWeaponsButton").html(`<i class="fa-solid fa-gun"></i> ${translation["View weapons"]}`);
     $(".boloCitizenCreateButton").html(`<i class="fa-solid fa-hand"></i> ${translation["Create BOLO"]}`);
@@ -188,7 +192,7 @@ $.getJSON("../config/translate.json", function(data) {
     $(".rightPanelReportsButtons button[value=\"create\"]").text(translation["Create report"]);
     $(".liveChatRateLimit").text(translation["You've been rate limited, wait for this message to dissapear."]);
     $(".form-records-bar").text(translation["Create record"]);
-    $("#form-bolo-create, #form-reports-create, #form-records-create").text(translation["Create"]);
+    $("#form-bolo-create, #form-reports-create, #form-records-create, #form-updatePicture-create").text(translation["Confirm"]);
     $(".form-bolo-bar").text(translation["Create BOLO"]);
     $(".form-bolo-type option[value=\"\"]").text(translation["Choose bolo Type"]);
     $(".form-bolo-type option[value=\"person\"]").text(translation["Person"]);
@@ -203,6 +207,7 @@ $.getJSON("../config/translate.json", function(data) {
     $(".form-reports-type option[value=\"use_of_force\"]").text(translation["Use of Force"]);
     $(".confirm-screen > div button[value=\"confirm\"]").text(translation["Confirm"]);
     $(".confirm-screen > div button[value=\"cancel\"]").text(translation["Cancel"]);
+    $(".form-updatePicture-help").text(translation["Confirm new Image text"]);
 });
 
 // Hide all pages but the dashboard on start.
@@ -615,6 +620,13 @@ function createRecordsPage(data) {
             <textarea id="recordsCitizenNotesText" data-character="${data.citizen.characterId}"></textarea>
         </div>
     `);
+
+    $(".updatePictureButton").data("character", {
+        id: data.citizen.characterId,
+        firstName: data.citizen.firstName,
+        lastName: data.citizen.lastName,
+        img: data.citizen.img
+    });
     
     if (data.records.notes) {
         $("#recordsCitizenNotesText").val(escapeHtml(data.records.notes));
@@ -785,6 +797,10 @@ $(".form-reports-close").click(function() {
         $(".form-reports-content > textarea, .form-reports-content > input").val("");
     }, 250);
 });
+$(".form-updatePicture-close").click(function() {
+    $(".form-updatePicture").fadeOut();
+    $(".form-updatePicture-preview").attr("src", "user.jpg");
+});
 
 $(".recordsPageTopButton").click(function() {
     const text = $(this).text()
@@ -839,8 +855,47 @@ $(".recordsPageTopButton").click(function() {
             newCharges: newCharges
         }));
         newCharges = {}
+    } else if (text == ` ${translation["Update Picture"]}`) {
+        const e = $(".form-updatePicture")
+        e.fadeIn();
+        e.get(-1).style.zIndex = 1000;
+        document.body.append(e.get(-1));
+
+        $(".form-updatePicture-preview").attr("src", character.img || "user.jpg");
+
+        $("#form-updatePicture-create").data("character", {
+            id: character.id,
+            firstName: character.firstName,
+            lastName: character.lastName,
+            img: character.img
+        });
     }
 
+});
+
+// Change Image Source Handlers - https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.webp
+$(".form-updatePicture-content > input").change(function () {
+    const src = $(this).val();
+    console.log("Changed SRC", src);
+    $(".form-updatePicture-preview").attr("src", src || "user.jpg");
+})
+$("#form-updatePicture-create").click(function () {
+    const data = $(".form-updatePicture-content > input").val();
+    $(".recordsCitizenImage").attr("src", data || "user.jpg");
+
+    const character = $(this).data("character");
+
+    if (character.firstName + " " + character.lastName === $(".leftPanelPlayerInfoName").text()) {
+        $(".leftPanelPlayerInfoImage").attr("src", data);
+    };
+
+    $(".form-updatePicture").fadeOut();
+    $(".form-updatePicture-preview").attr("src", "user.jpg");
+
+    $.post(`https://${GetParentResourceName()}/updateProfilePicture`, JSON.stringify({
+        character: character,
+        img: data
+    }));
 });
 
 // Confirm create bolo
@@ -1627,7 +1682,7 @@ $(".minimizeOverlay").click(function() {
 
 // close the whole ui when the X square is clicked.
 $(".closeOverlay").click(function() {
-    $(".background, .form-records, .form-bolo, .form-reports").fadeOut("fast");
+    $(".background, .form-records, .form-bolo, .form-reports, .form-updatePicture").fadeOut("fast");
     $.post(`https://${GetParentResourceName()}/close`);
     setTimeout(() => {
         $(".recordsCitizen, .recordsPropertiesInfo, .recordsLicensesInfo, .rightPanelWeaponSearchResponses, .rightPanelPlateSearchResponses, .rightPanelNameSearchResponses, .rightPanelEmployeeSearchResponses").empty();
@@ -1787,7 +1842,7 @@ $("#nameSearch").on("keydown", "input", function(event) {
 // Close ui when ESC is pressed.
 document.addEventListener("keydown", event => {
     if (event.key === 'Escape') {
-        $(".background, .form-records, .form-bolo, .form-reports").fadeOut("fast");
+        $(".background, .form-records, .form-bolo, .form-reports, .form-updatePicture").fadeOut("fast");
         $.post(`https://${GetParentResourceName()}/close`);
     }
 });
