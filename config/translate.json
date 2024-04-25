@@ -21,6 +21,7 @@
     "Phone number": "Phone number",
     "View Weapons": "View Weapons",
     "View Vehicles": "View Vehicles",
+    "Update Picture": "Update Picture",
     "Not found": "Not found",
     "Plate": "Plate",
     "Color": "Color",
@@ -124,5 +125,6 @@
     "Fire Employee": "Fire Employee",
     "Change Rank": "Change Rank",
     "Change Callsign": "Change Callsign",
-    "This action will fire this employee, are you sure you'd like to continue?": "This action will fire this employee, are you sure you'd like to continue?"
+    "This action will fire this employee, are you sure you'd like to continue?": "This action will fire this employee, are you sure you'd like to continue?",
+    "Confirm new Image text": "Check the rendered image before confirming"
 }]
