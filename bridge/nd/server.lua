@@ -116,6 +116,12 @@ function Bridge.characterSearch(source, characterSearched)
     return profiles
 end
 
+---@param identifier string
+---@param imgSource string Valid URL
+function Bridge.updateProfilePicture(identifier, imgSource)
+    --[[ Not sure how it works on NDCore - Maximus7474 ]]
+end
+
 ---@param src number
 ---@return table
 function Bridge.getPlayerInfo(src)

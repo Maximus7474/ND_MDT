@@ -552,7 +552,7 @@ RegisterNetEvent("ND_MDT:update911Calls", function(emeregencyCalls, blipInfo, no
         coords = coords,
         distance = 50
     })
-     
+
     function point:onEnter()
         removeResponseBlipAndPoint()
         lib.notify({
@@ -589,6 +589,10 @@ end)
 
 RegisterNUICallback("createBolo", function(data)
     TriggerServerEvent("ND_MDT:createBolo", data)
+end)
+
+RegisterNUICallback("updateProfilePicture", function(data)
+    TriggerServerEvent("ND_MDT:updateProfilePicture", data)
 end)
 
 RegisterNUICallback("getBolos", function(data)

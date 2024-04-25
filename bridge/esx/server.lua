@@ -1,5 +1,6 @@
 local ESX = exports["es_extended"]:getSharedObject()
 local Bridge = {}
+local IDpictures = {}
 
 --[[ NEEDS TO BE CREATED ]]
 -- SetTimeout(500, function()
@@ -117,18 +118,40 @@ function Bridge.characterSearch(source, characterSearched)
     return profiles
 end
 
+---@param identifier string
+---@param imgSource string Valid URL
+function Bridge.updateProfilePicture(identifier, imgSource)
+    local rows = MySQL.update.await("UPDATE users SET image = ? WHERE identifier = ?", {imgSource, identifier})
+
+    if rows > 1 then
+        IDpictures[identifier] = imgSource
+    end
+end
+
+---@param characterId number
+function Bridge.getPlayerImage(characterId)
+    if IDpictures[characterId] then return IDpictures[characterId] end
+    local result = MySQL.query.await(
+        "SELECT `image` FROM `users` WHERE identifier = ?", {characterId}
+    )
+    IDpictures[characterId] = result?[1]?.image or nil
+    return result?[1]?.image or "user.jpg"
+end
+
 ---@param src number
 ---@return table
 function Bridge.getPlayerInfo(src)
     local xPlayer = ESX.GetPlayerFromId(src) or {}
+    local identifier = xPlayer.getIdentifier()
+    local img = IDpictures[identifier] or Bridge.getPlayerImage(identifier) or "user.jpg"
     return {
         firstName = xPlayer.get("firstName") or "",
         lastName = xPlayer.get("lastName") or "",
         job = xPlayer.getJob().name or "",
         jobLabel = xPlayer.getJob().label or "",
         callsign = xPlayer.getMeta("callsign") or "",
-        img = "user.jpg",
-        characterId = xPlayer.getIdentifier()
+        img = img,
+        characterId = identifier
     }
 end
 
@@ -320,14 +343,6 @@ function Bridge.getStolenVehicles()
 end
 
 ---@param characterId number
-function Bridge.getPlayerImage(characterId)
-    local result = MySQL.query.await(
-        "SELECT `image` FROM `users` WHERE identifier = ?", {characterId}
-    )
-    return result?[1]?.image or nil
-end
-
----@param characterId number
 ---@param key any
 ---@param value any
 function Bridge.updatePlayerMetadata(source, characterId, key, value)
@@ -454,7 +469,6 @@ function Bridge.employeeUpdateCallsign(src, charid, callsign)
         end
 
         targetPlayer.setMeta("callsign", callsign)
-        print("callsign targetPlayer", targetPlayer.getMeta("callsign"))
         return callsign
     end
 
@@ -596,6 +610,13 @@ end
 --[[ Xtra Functions ]]
 lib.callback.register("ND_MDT:getRanks", function (src, jobName)
     return ESX.GetJobs()[jobName]?.grades
+end)
+
+lib.callback.register("ND_MDT:esx:getProfileImage", function (source)
+    local characterId = Bridge.getPlayerInfo(source).characterId
+    local img = Bridge.getPlayerImage(characterId)
+
+    return img
 end)
 
 return Bridge

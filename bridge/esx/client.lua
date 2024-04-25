@@ -1,5 +1,6 @@
 local ESX = exports["es_extended"]:getSharedObject()
 local Bridge = {}
+local profilePicture = nil
 
 ---@return table
 function Bridge.getPlayerInfo()
@@ -16,13 +17,18 @@ function Bridge.getPlayerInfo()
         Citizen.Wait(50)
     end
 
+    local img = profilePicture or lib.callback.await("ND_MDT:esx:getProfileImage", false)
+    if img ~= profilePicture then
+        profilePicture = img
+    end
+
     return {
         firstName = xPlayer.firstName or "",
         lastName = xPlayer.lastName or "",
         job = xPlayer?.job?.name or "",
         jobLabel = xPlayer.job?.label or "",
         callsign = xPlayer?.metadata?.callsign or "",
-        img = "user.jpg",
+        img = img,
         isBoss = isBoss,
     }
 end
@@ -56,7 +62,6 @@ function Bridge.getCitizenInfo(id, info)
 end
 
 function Bridge.getRanks(job)
-    print("Bridge.getRanks", json.encode(job, {indent=4}))
     local ranks = lib.callback.await("ND_MDT:getRanks", false, job)
 
     if not ranks then return end
