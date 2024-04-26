@@ -418,7 +418,7 @@ function Bridge.viewEmployees(src, search)
 
         if not config.policeAccess[job] then goto next end
 
-        if not filterEmployeeSearch(info, nil, search or "") then goto next end
+        if not filterEmployeeSearch(nil, info, search or "") then goto next end
 
         employees[#employees+1] = {
             charId = info.identifier,
