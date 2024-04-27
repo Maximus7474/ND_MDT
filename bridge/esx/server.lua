@@ -369,9 +369,9 @@ local function filterEmployeeSearch(player, metadata, search)
         )
     else
         toSearch = ("%s %s %s"):format(
-            (player.firstname or ""):lower(),
-            (player.lastname or ""):lower(),
-            ((json.decode(player.metadata)?.callsign) or ""):lower()
+            (metadata.firstname or ""):lower(),
+            (metadata.lastname or ""):lower(),
+            ((json.decode(metadata.metadata)?.callsign) or ""):lower()
         )
     end
 
