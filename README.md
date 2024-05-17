@@ -97,8 +97,9 @@ Still to do:
   * Custom Property Functions
   * Custom Billing Functions
   * Saving a new profile picture for ND_Core (present for ESX -> goto file `bridge/nd/server.lua:121 - Bridge.updateProfilePicture()`)
--> For the time being there is no Default billing system integrated, it is present but commented as esx_billing requires a destination for the money. You can activate it in: `bridge/esx/server.lua:299`
--> Don't hesitate in opening issues ;)
+  * -> For the time being there is no Default billing system integrated, it is present but commented as esx_billing requires a destination for the money. You can activate it in: `bridge/esx/server.lua:299`
+
+#### Don't hesitate in opening issues ;)
 
 
 ## Video preview:
