@@ -361,7 +361,7 @@ end
 local function filterEmployeeSearch(player, metadata, search)
     local toSearch
 
-    if player.get then
+    if player and player?.get then
         toSearch = ("%s %s %s"):format(
             (player.get("firstName") or ""):lower(),
             (player.get("lastName") or ""):lower(),
