@@ -12,7 +12,7 @@ This is a police MDT with many useful features, I plan on making a dispatch pane
 
 I started this project over two years ago and didn't complete it for different reasons, I've now went back and completed it. Most of the code is still ~2 years old but I did rewrite some parts to make it better and right now it should be good to use with a couple rare minor bugs that I probably didn't find during testing which I'll fix if there's issues created about them.
 
-This resource is created for [ND_Core](https://forum.cfx.re/t/wip-nd-core/4792200?u=andyyy7666) but I might integrate it with ESX and QB in the future if there's any interest.
+This resource is created for [ND_Core](https://forum.cfx.re/t/wip-nd-core/4792200?u=andyyy7666) and is also compatible with [ESX](https://github.com/esx-framework/esx_core) but I might integrate it with QB in the future if there's any interest.
 
 
 ## Future plans
